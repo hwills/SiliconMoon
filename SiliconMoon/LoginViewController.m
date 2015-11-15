@@ -63,13 +63,13 @@
 - (void)buttonClicked: (UIButton*) sender
 {
     switch (sender.tag) {
-        case 1:
+        case 1: {
             NSLog(@"Clicked on login");
             // need to check login information here
-//            NSURL *jsonFileUrl = [NSURL URLWithString:@"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php?user=demoUser1"];
-//            NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:jsonFileUrl];
-//            [NSURLConnection connectionWithRequest:urlRequest delegate:self];
-            break;
+            NSURL *jsonFileUrl = [NSURL URLWithString:@"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php?user=demoUser1"];
+            NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:jsonFileUrl];
+            [NSURLConnection connectionWithRequest:urlRequest delegate:self];
+            break;}
         case 2:
             NSLog(@"Clicked on register");
             // get to register view controller here
@@ -77,6 +77,27 @@
         default:
             break;
     }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    NSMutableData *responseData = [[NSMutableData alloc] init];
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [self.webResopnse appendData:data];
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"hre");
+    NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",responseString);
+    NSError *e = nil;
+    NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
+    NSLog(@"%@", self.webResopnse);
+    
 }
 
 @end

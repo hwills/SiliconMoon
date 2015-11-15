@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  BrowseDevelopersViewController.h
 //  SiliconMoon
 //
 //  Created by Hunter Wills on 11/15/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController
-
-@property (nonatomic, retain) NSMutableData *webResopnse;
+@interface BrowseDevelopersViewController : UIViewController
 
 @end
