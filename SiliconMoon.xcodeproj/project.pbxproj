@@ -14,6 +14,10 @@
 		BDAEA1551BF91E9A00A5F480 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDAEA1541BF91E9A00A5F480 /* Images.xcassets */; };
 		BDAEA1581BF91E9A00A5F480 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDAEA1561BF91E9A00A5F480 /* LaunchScreen.xib */; };
 		BDAEA1641BF91E9A00A5F480 /* SiliconMoonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1631BF91E9A00A5F480 /* SiliconMoonTests.m */; };
+		BDAEA16F1BF921E200A5F480 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA16E1BF921E200A5F480 /* LoginViewController.m */; };
+		BDAEA1721BF9225200A5F480 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1711BF9225200A5F480 /* WelcomeViewController.m */; };
+		BDAEA1751BF9229C00A5F480 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1741BF9229C00A5F480 /* ProfileViewController.m */; };
+		BDAEA1781BF922C100A5F480 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1771BF922C100A5F480 /* RegistrationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,14 @@
 		BDAEA15D1BF91E9A00A5F480 /* SiliconMoonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SiliconMoonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAEA1621BF91E9A00A5F480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDAEA1631BF91E9A00A5F480 /* SiliconMoonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SiliconMoonTests.m; sourceTree = "<group>"; };
+		BDAEA16D1BF921E200A5F480 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		BDAEA16E1BF921E200A5F480 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		BDAEA1701BF9225200A5F480 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
+		BDAEA1711BF9225200A5F480 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
+		BDAEA1731BF9229C00A5F480 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		BDAEA1741BF9229C00A5F480 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		BDAEA1761BF922C100A5F480 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
+		BDAEA1771BF922C100A5F480 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +95,14 @@
 			children = (
 				BDAEA14B1BF91E9A00A5F480 /* AppDelegate.h */,
 				BDAEA14C1BF91E9A00A5F480 /* AppDelegate.m */,
+				BDAEA1701BF9225200A5F480 /* WelcomeViewController.h */,
+				BDAEA1711BF9225200A5F480 /* WelcomeViewController.m */,
+				BDAEA1731BF9229C00A5F480 /* ProfileViewController.h */,
+				BDAEA1741BF9229C00A5F480 /* ProfileViewController.m */,
+				BDAEA1761BF922C100A5F480 /* RegistrationViewController.h */,
+				BDAEA1771BF922C100A5F480 /* RegistrationViewController.m */,
+				BDAEA16D1BF921E200A5F480 /* LoginViewController.h */,
+				BDAEA16E1BF921E200A5F480 /* LoginViewController.m */,
 				BDAEA14E1BF91E9A00A5F480 /* ViewController.h */,
 				BDAEA14F1BF91E9A00A5F480 /* ViewController.m */,
 				BDAEA1511BF91E9A00A5F480 /* Main.storyboard */,
@@ -219,9 +239,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDAEA1721BF9225200A5F480 /* WelcomeViewController.m in Sources */,
+				BDAEA16F1BF921E200A5F480 /* LoginViewController.m in Sources */,
 				BDAEA1501BF91E9A00A5F480 /* ViewController.m in Sources */,
 				BDAEA14D1BF91E9A00A5F480 /* AppDelegate.m in Sources */,
+				BDAEA1751BF9229C00A5F480 /* ProfileViewController.m in Sources */,
 				BDAEA14A1BF91E9A00A5F480 /* main.m in Sources */,
+				BDAEA1781BF922C100A5F480 /* RegistrationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    //VIEWS:
+        //Intro to app screen (login/register)
+        //Welcome to app screen (choose your profile/browse)
+        //Various profile screens
+        //various browse screens
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    
+    UIViewController * introController = [[LoginViewController alloc] init];
+    UINavigationController * vc1 = [[UINavigationController alloc] initWithRootViewController:introController];
+    self.window.rootViewController = vc1;
+    
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
