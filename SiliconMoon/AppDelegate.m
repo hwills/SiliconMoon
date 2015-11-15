@@ -30,7 +30,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     
-    UIViewController * introController = [[WelcomeViewController alloc] init];
+    UIViewController * introController = [[LoginViewController alloc] init];
     UINavigationController * vc1 = [[UINavigationController alloc] initWithRootViewController:introController];
     self.window.rootViewController = vc1;
     

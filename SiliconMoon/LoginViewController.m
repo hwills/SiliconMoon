@@ -66,6 +66,9 @@
         case 1:
             NSLog(@"Clicked on login");
             // need to check login information here
+//            NSURL *jsonFileUrl = [NSURL URLWithString:@"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php?user=demoUser1"];
+//            NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:jsonFileUrl];
+//            [NSURLConnection connectionWithRequest:urlRequest delegate:self];
             break;
         case 2:
             NSLog(@"Clicked on register");

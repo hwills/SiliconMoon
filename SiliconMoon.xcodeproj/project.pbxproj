@@ -18,6 +18,8 @@
 		BDAEA1721BF9225200A5F480 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1711BF9225200A5F480 /* WelcomeViewController.m */; };
 		BDAEA1751BF9229C00A5F480 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1741BF9229C00A5F480 /* ProfileViewController.m */; };
 		BDAEA1781BF922C100A5F480 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1771BF922C100A5F480 /* RegistrationViewController.m */; };
+		BDAEA17B1BF9393100A5F480 /* BrowseTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA17A1BF9393100A5F480 /* BrowseTabBarController.m */; };
+		BDAEA17E1BF9395900A5F480 /* CreateProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA17D1BF9395900A5F480 /* CreateProjectViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,10 @@
 		BDAEA1741BF9229C00A5F480 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		BDAEA1761BF922C100A5F480 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		BDAEA1771BF922C100A5F480 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
+		BDAEA1791BF9393100A5F480 /* BrowseTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseTabBarController.h; sourceTree = "<group>"; };
+		BDAEA17A1BF9393100A5F480 /* BrowseTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseTabBarController.m; sourceTree = "<group>"; };
+		BDAEA17C1BF9395900A5F480 /* CreateProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProjectViewController.h; sourceTree = "<group>"; };
+		BDAEA17D1BF9395900A5F480 /* CreateProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProjectViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,10 @@
 				BDAEA1541BF91E9A00A5F480 /* Images.xcassets */,
 				BDAEA1561BF91E9A00A5F480 /* LaunchScreen.xib */,
 				BDAEA1471BF91E9A00A5F480 /* Supporting Files */,
+				BDAEA1791BF9393100A5F480 /* BrowseTabBarController.h */,
+				BDAEA17A1BF9393100A5F480 /* BrowseTabBarController.m */,
+				BDAEA17C1BF9395900A5F480 /* CreateProjectViewController.h */,
+				BDAEA17D1BF9395900A5F480 /* CreateProjectViewController.m */,
 			);
 			path = SiliconMoon;
 			sourceTree = "<group>";
@@ -240,10 +250,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDAEA1721BF9225200A5F480 /* WelcomeViewController.m in Sources */,
+				BDAEA17E1BF9395900A5F480 /* CreateProjectViewController.m in Sources */,
 				BDAEA16F1BF921E200A5F480 /* LoginViewController.m in Sources */,
 				BDAEA1501BF91E9A00A5F480 /* ViewController.m in Sources */,
 				BDAEA14D1BF91E9A00A5F480 /* AppDelegate.m in Sources */,
 				BDAEA1751BF9229C00A5F480 /* ProfileViewController.m in Sources */,
+				BDAEA17B1BF9393100A5F480 /* BrowseTabBarController.m in Sources */,
 				BDAEA14A1BF91E9A00A5F480 /* main.m in Sources */,
 				BDAEA1781BF922C100A5F480 /* RegistrationViewController.m in Sources */,
 			);
