@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "WelcomeViewController.h"
 
 @interface AppDelegate ()
 
@@ -29,7 +30,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     
-    UIViewController * introController = [[LoginViewController alloc] init];
+    UIViewController * introController = [[WelcomeViewController alloc] init];
     UINavigationController * vc1 = [[UINavigationController alloc] initWithRootViewController:introController];
     self.window.rootViewController = vc1;
     
