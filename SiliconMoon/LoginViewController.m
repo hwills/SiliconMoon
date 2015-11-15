@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "WelcomeViewController.h"
 
 @implementation LoginViewController
 
@@ -21,6 +22,10 @@
     
     // register button has tag 2
     [self addButton:@"Register" :CGRectMake(100, 450, 200, 50) :2];
+    
+    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
+    self.navigationItem.backBarButtonItem = logout;
     
     return self;
 }
@@ -55,6 +60,10 @@
     //Placeholder text is displayed when no text is typed
     textField.placeholder = inputLabel;
     
+    if ([inputLabel  isEqual: @"Username"]) {
+        self.username = textField;
+    }
+    
     // Adds the textField to the view.
     [self.view addSubview:textField];
 }
@@ -66,7 +75,7 @@
         case 1: {
             NSLog(@"Clicked on login");
             // need to check login information here
-            NSURL *jsonFileUrl = [NSURL URLWithString:@"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php?user=demoUser1"];
+            NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php?user=",self.username.text]];
             NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:jsonFileUrl];
             [NSURLConnection connectionWithRequest:urlRequest delegate:self];
             break;}
@@ -81,7 +90,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSMutableData *responseData = [[NSMutableData alloc] init];
+    self.webResopnse = [[NSMutableData alloc] init];
     // Append the new data to receivedData.
     // receivedData is an instance variable declared elsewhere.
     [self.webResopnse appendData:data];
@@ -89,14 +98,17 @@
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSLog(@"hre");
+{;
     NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",responseString);
+    if ([responseString  isEqual: @"{ \"url\":\"\", \"desc\":\"\" }"]) {
+        NSLog(@"USER DID NOT EXIST");
+    }
     NSError *e = nil;
     NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
-    NSLog(@"%@", self.webResopnse);
+    
+    UIViewController *vc = [[WelcomeViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

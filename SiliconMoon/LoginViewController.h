@@ -11,5 +11,6 @@
 @interface LoginViewController : UIViewController
 
 @property (nonatomic, retain) NSMutableData *webResopnse;
+@property (nonatomic, retain) UITextField *username;
 
 @end
