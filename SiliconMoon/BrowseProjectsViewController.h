@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowseProjectsViewController : UIViewController
+@interface BrowseProjectsViewController : UIViewController<UITableViewDataSource,
+UITableViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *content;
 
 @end

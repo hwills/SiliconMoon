@@ -7,7 +7,20 @@
 //
 
 #import "BrowseTabBarController.h"
+#import "BrowseProjectsViewController.h"
+#import "BrowseDevelopersViewController.h"
+#import "BrowseMentorsViewController.h"
 
 @implementation BrowseTabBarController
+
+-(id) init
+{
+    self= [super init];
+    BrowseProjectsViewController *projectsVC= [[BrowseProjectsViewController alloc]init];
+    BrowseDevelopersViewController *developersVC= [[BrowseDevelopersViewController alloc]init];
+    BrowseMentorsViewController *mentorsVC= [[BrowseMentorsViewController alloc]init];
+    self.viewControllers= [NSArray arrayWithObjects: projectsVC, developersVC, mentorsVC, nil];
+    return self;
+}
 
 @end

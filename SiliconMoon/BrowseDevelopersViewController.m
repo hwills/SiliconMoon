@@ -10,4 +10,11 @@
 
 @implementation BrowseDevelopersViewController
 
+-(id) init
+{
+    self= [super init];
+    [self setTitle:@"Developers"];
+    return self;
+}
+
 @end

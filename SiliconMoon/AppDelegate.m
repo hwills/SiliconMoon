@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "WelcomeViewController.h"
+#import "BrowseTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -32,7 +33,9 @@
     
     UIViewController * introController = [[LoginViewController alloc] init];
     UINavigationController * vc1 = [[UINavigationController alloc] initWithRootViewController:introController];
-    self.window.rootViewController = vc1;
+    
+    BrowseTabBarController * test_vc= [[BrowseTabBarController alloc]init];
+    self.window.rootViewController = test_vc;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

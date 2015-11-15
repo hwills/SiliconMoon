@@ -10,4 +10,11 @@
 
 @implementation BrowseMentorsViewController
 
+-(id) init
+{
+    self= [super init];
+    [self setTitle:@"Mentors"];
+    return self;
+}
+
 @end
