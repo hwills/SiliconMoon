@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF4D3FBA1BF98050000514F1 /* ProjectTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4D3FB91BF98050000514F1 /* ProjectTabBarController.m */; };
+		AF4D3FC01BF980E9000514F1 /* ProjectMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4D3FBF1BF980E9000514F1 /* ProjectMemberViewController.m */; };
+		AF4D3FC31BF9813E000514F1 /* ProjectDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4D3FC21BF9813E000514F1 /* ProjectDescriptionViewController.m */; };
+		AF4D3FC61BF9818A000514F1 /* ProjectMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AF4D3FC51BF9818A000514F1 /* ProjectMessageViewController.m */; };
 		BDAEA14A1BF91E9A00A5F480 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1491BF91E9A00A5F480 /* main.m */; };
 		BDAEA14D1BF91E9A00A5F480 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA14C1BF91E9A00A5F480 /* AppDelegate.m */; };
 		BDAEA1501BF91E9A00A5F480 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA14F1BF91E9A00A5F480 /* ViewController.m */; };
@@ -36,6 +40,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AF4D3FB81BF98050000514F1 /* ProjectTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectTabBarController.h; sourceTree = "<group>"; };
+		AF4D3FB91BF98050000514F1 /* ProjectTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectTabBarController.m; sourceTree = "<group>"; };
+		AF4D3FBE1BF980E9000514F1 /* ProjectMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectMemberViewController.h; sourceTree = "<group>"; };
+		AF4D3FBF1BF980E9000514F1 /* ProjectMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectMemberViewController.m; sourceTree = "<group>"; };
+		AF4D3FC11BF9813E000514F1 /* ProjectDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectDescriptionViewController.h; sourceTree = "<group>"; };
+		AF4D3FC21BF9813E000514F1 /* ProjectDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectDescriptionViewController.m; sourceTree = "<group>"; };
+		AF4D3FC41BF9818A000514F1 /* ProjectMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectMessageViewController.h; sourceTree = "<group>"; };
+		AF4D3FC51BF9818A000514F1 /* ProjectMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectMessageViewController.m; sourceTree = "<group>"; };
 		BDAEA1441BF91E9A00A5F480 /* SiliconMoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SiliconMoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAEA1481BF91E9A00A5F480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDAEA1491BF91E9A00A5F480 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -108,6 +120,14 @@
 		BDAEA1461BF91E9A00A5F480 /* SiliconMoon */ = {
 			isa = PBXGroup;
 			children = (
+				AF4D3FC41BF9818A000514F1 /* ProjectMessageViewController.h */,
+				AF4D3FC51BF9818A000514F1 /* ProjectMessageViewController.m */,
+				AF4D3FC11BF9813E000514F1 /* ProjectDescriptionViewController.h */,
+				AF4D3FC21BF9813E000514F1 /* ProjectDescriptionViewController.m */,
+				AF4D3FBE1BF980E9000514F1 /* ProjectMemberViewController.h */,
+				AF4D3FBF1BF980E9000514F1 /* ProjectMemberViewController.m */,
+				AF4D3FB81BF98050000514F1 /* ProjectTabBarController.h */,
+				AF4D3FB91BF98050000514F1 /* ProjectTabBarController.m */,
 				BDAEA14B1BF91E9A00A5F480 /* AppDelegate.h */,
 				BDAEA14C1BF91E9A00A5F480 /* AppDelegate.m */,
 				BDAEA1701BF9225200A5F480 /* WelcomeViewController.h */,
@@ -265,15 +285,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDAEA1721BF9225200A5F480 /* WelcomeViewController.m in Sources */,
+				AF4D3FC31BF9813E000514F1 /* ProjectDescriptionViewController.m in Sources */,
 				BDAEA1871BF93AD000A5F480 /* BrowseMentorsViewController.m in Sources */,
 				BDAEA17E1BF9395900A5F480 /* CreateProjectViewController.m in Sources */,
+				AF4D3FC61BF9818A000514F1 /* ProjectMessageViewController.m in Sources */,
 				BDAEA16F1BF921E200A5F480 /* LoginViewController.m in Sources */,
 				BDAEA1501BF91E9A00A5F480 /* ViewController.m in Sources */,
 				BDAEA1811BF93AB100A5F480 /* BrowseProjectsViewController.m in Sources */,
 				BDAEA14D1BF91E9A00A5F480 /* AppDelegate.m in Sources */,
+				AF4D3FBA1BF98050000514F1 /* ProjectTabBarController.m in Sources */,
 				BDAEA1841BF93AC200A5F480 /* BrowseDevelopersViewController.m in Sources */,
 				BDAEA1751BF9229C00A5F480 /* ProfileViewController.m in Sources */,
 				BDAEA17B1BF9393100A5F480 /* BrowseTabBarController.m in Sources */,
+				AF4D3FC01BF980E9000514F1 /* ProjectMemberViewController.m in Sources */,
 				BDAEA14A1BF91E9A00A5F480 /* main.m in Sources */,
 				BDAEA1781BF922C100A5F480 /* RegistrationViewController.m in Sources */,
 			);
@@ -472,6 +496,7 @@
 				BDAEA1691BF91E9A00A5F480 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BDAEA16A1BF91E9A00A5F480 /* Build configuration list for PBXNativeTarget "SiliconMoonTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +505,7 @@
 				BDAEA16C1BF91E9A00A5F480 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
