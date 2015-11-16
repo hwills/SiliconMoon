@@ -8,6 +8,7 @@
 
 #import "WelcomeViewController.h"
 #import "ProfileViewController.h"
+#import "BrowseTabBarController.h"
 
 @implementation WelcomeViewController
 
@@ -57,8 +58,8 @@
 
 - (void) browseButtonWasClicked :(id) sender {
     
-    UIViewController *vc = [[UIViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    UITabBarController *tbc = [[BrowseTabBarController alloc] init];
+    [self.navigationController pushViewController:tbc animated:YES];
     
 }
 

@@ -14,31 +14,35 @@
 {
     self = [super init];
     
-    UIImage * img = [[UIImage alloc] init];
+    UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://i.ytimg.com/vi/o0LOJCvMWwM/hqdefault.jpg"]]];
+    UIImageView *view = [[UIImageView alloc] initWithImage:img];
+    view.frame = CGRectMake(20.0, 100.0, 100.0, 100.0);
+    view.backgroundColor = [[UIColor alloc] initWithPatternImage:img];
+    [self.view addSubview:view];
     //TODO: make image work
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    [titleLabel setText:@"ME PLACEHOLDER"];
+    [titleLabel setText:@"hwills"];
     [titleLabel setTextAlignment:NSTextAlignmentLeft];
     [titleLabel setFont:[UIFont fontWithName:@"Times" size:36.0]];
     [titleLabel setTextColor:[UIColor blackColor]];
     titleLabel.numberOfLines = 1;
-    titleLabel.frame = CGRectMake(100.0, 100.0, 180.0, 100.0);
+    titleLabel.frame = CGRectMake(view.frame.origin.x + view.frame.size.width + 10, 100.0, 200.0, 100.0);
     [self.view addSubview:titleLabel];
     
     UILabel *descLabel = [[UILabel alloc] init];
-    [descLabel setText:@"DESCRIPTION PLACEHOLDER"];
+    [descLabel setText:@"I am a pacman looking for his pellet."];
     [descLabel setTextAlignment:NSTextAlignmentLeft];
     [descLabel setFont:[UIFont fontWithName:@"Times" size:12.0]];
     [descLabel setTextColor:[UIColor blackColor]];
     descLabel.numberOfLines = 2;
-    descLabel.frame = CGRectMake(100.0, 200.0, 180.0, 100.0);
+    descLabel.frame = CGRectMake(30.0, 200.0, 180.0, 100.0);
     [self.view addSubview:descLabel];
     
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [editBtn addTarget:self action:@selector(editButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"Edit" forState:UIControlStateNormal];
-    editBtn.frame = CGRectMake(descLabel.frame.origin.x + descLabel.frame.size.width, descLabel.frame.origin.y, 120.0, 50.0);
+    editBtn.frame = CGRectMake(descLabel.frame.origin.x + descLabel.frame.size.width, descLabel.frame.origin.y, 120.0, 30.0);
     editBtn.backgroundColor = [UIColor blueColor];
     [self.view addSubview:editBtn];
     
@@ -46,13 +50,13 @@
     projects.delegate = self;
     projects.dataSource = self;
     projects.showsSelectionIndicator = YES;
-    projects.frame = CGRectMake(50.0, 300.0, 180.0, 162.0);
+    projects.frame = CGRectMake(20.0, 250.0, 180.0, 162.0);
     [self.view addSubview:projects];
     
     UIButton *projectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [projectBtn addTarget:self action:@selector(projectButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
     [projectBtn setTitle:@"See this project" forState:UIControlStateNormal];
-    projectBtn.frame = CGRectMake(projects.frame.origin.x + projects.frame.size.width, projects.frame.origin.y, 120.0, 50.0);
+    projectBtn.frame = CGRectMake(projects.frame.origin.x + projects.frame.size.width, projects.frame.origin.y + 100.0, 120.0, 30.0);
     projectBtn.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:projectBtn];
 
