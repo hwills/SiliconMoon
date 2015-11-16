@@ -10,4 +10,10 @@
 
 @interface RegistrationViewController : UIViewController
 
+@property (nonatomic, retain) NSMutableData *webResopnse;
+@property (nonatomic, retain) UITextField *username;
+@property (nonatomic, retain) UITextField *imageUrl;
+@property (nonatomic, retain) UITextField *desc;
+@property (nonatomic, retain) UITextField *password;
+
 @end

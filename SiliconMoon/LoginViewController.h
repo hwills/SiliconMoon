@@ -12,5 +12,7 @@
 
 @property (nonatomic, retain) NSMutableData *webResopnse;
 @property (nonatomic, retain) UITextField *username;
+@property (nonatomic, retain) UITextField *password;
+
 
 @end

@@ -11,8 +11,9 @@
 
 @implementation WelcomeViewController
 
-- (id) init
+- (id) initWithUserId :(NSInteger) userId
 {
+    NSLog(@"%d", userId);
     self = [super init];
     
     int profBtnOffset = 200;
