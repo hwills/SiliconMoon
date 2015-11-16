@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowseDevelopersViewController : UIViewController
+@interface BrowseDevelopersViewController : UIViewController<UITableViewDataSource,
+UITableViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray * developers;
 
 @end

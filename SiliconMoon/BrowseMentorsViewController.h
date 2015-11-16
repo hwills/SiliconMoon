@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowseMentorsViewController : UIViewController
+@interface BrowseMentorsViewController : UIViewController<UITableViewDataSource,
+UITableViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *mentors;
 
 @end
