@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "WelcomeViewController.h"
+#import "RegistrationViewController.h"
 
 @implementation LoginViewController
 
@@ -55,6 +57,13 @@
     //Placeholder text is displayed when no text is typed
     textField.placeholder = inputLabel;
     
+    if ([inputLabel  isEqual: @"Username"]) {
+        self.username = textField;
+    }
+    else {
+        self.password = textField;
+    }
+    
     // Adds the textField to the view.
     [self.view addSubview:textField];
 }
@@ -66,14 +75,30 @@
         case 1: {
             NSLog(@"Clicked on login");
             // need to check login information here
-            NSURL *jsonFileUrl = [NSURL URLWithString:@"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php?user=demoUser1"];
-            NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:jsonFileUrl];
+            UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStyleBordered target:nil action:nil];
+            
+            self.navigationItem.backBarButtonItem = logout;
+            NSString *post = [NSString stringWithFormat:@"user=%@&pass=%@",self.username.text,self.password.text];
+            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+            NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getUser.php"]];
+            NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+            [urlRequest setURL:jsonFileUrl];
+            [urlRequest setHTTPMethod:@"POST"];
+            [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+            [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            [urlRequest setHTTPBody:postData];
             [NSURLConnection connectionWithRequest:urlRequest delegate:self];
             break;}
-        case 2:
+        case 2:{
             NSLog(@"Clicked on register");
             // get to register view controller here
-            break;
+            UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+            
+            self.navigationItem.backBarButtonItem = back;
+            UIViewController *vc = [[RegistrationViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+            break;}
         default:
             break;
     }
@@ -81,7 +106,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSMutableData *responseData = [[NSMutableData alloc] init];
+    self.webResopnse = [[NSMutableData alloc] init];
     // Append the new data to receivedData.
     // receivedData is an instance variable declared elsewhere.
     [self.webResopnse appendData:data];
@@ -90,13 +115,18 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"hre");
     NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
-    NSLog(@"%@",responseString);
     NSError *e = nil;
     NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
-    NSLog(@"%@", self.webResopnse);
+    NSLog(@"%@", JSON[@"success"]);
+    if ([JSON[@"success"] isEqual: @"false"]) {
+        UIAlertView * noSuchUserAlert = [[UIAlertView alloc] initWithTitle:@"User does not exist" message:@"This username password combination did not match our records please try again or register with a new account." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
+        [noSuchUserAlert show];
+        return;
+    }
+    UIViewController *vc = [[WelcomeViewController alloc] initWithUserId:[((NSString*)JSON[@"id"]) integerValue]];
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 
