@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "WelcomeViewController.h"
 #import "BrowseTabBarController.h"
+#import "ProjectTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -29,13 +30,15 @@
         //various browse screens
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
+//    UIViewController * introController = [[LoginViewController alloc] init];
+//    UINavigationController * vc1 = [[UINavigationController alloc] initWithRootViewController:introController];
     
+//    BrowseTabBarController * test_vc= [[BrowseTabBarController alloc]init];
+//    self.window.rootViewController = test_vc;
     
-    UIViewController * introController = [[LoginViewController alloc] init];
-    UINavigationController * vc1 = [[UINavigationController alloc] initWithRootViewController:introController];
-    
-    BrowseTabBarController * test_vc= [[BrowseTabBarController alloc]init];
-    self.window.rootViewController = test_vc;
+    ProjectTabBarController *project_vc= [[ProjectTabBarController alloc]init];
+    self.window.rootViewController= project_vc;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
