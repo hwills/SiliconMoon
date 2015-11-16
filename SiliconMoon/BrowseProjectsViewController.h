@@ -11,6 +11,6 @@
 @interface BrowseProjectsViewController : UIViewController<UITableViewDataSource,
 UITableViewDelegate>
 
-@property (nonatomic, strong) NSMutableArray *content;
+@property (nonatomic, strong) NSMutableArray *projects;
 
 @end
