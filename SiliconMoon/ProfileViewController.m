@@ -10,7 +10,7 @@
 
 @implementation ProfileViewController
 
-- (id) init
+- (id) initWithUserId :(NSInteger) userId
 {
     self = [super init];
     

@@ -13,7 +13,8 @@
 
 - (id) initWithUserId :(NSInteger) userId
 {
-    NSLog(@"%d", userId);
+    NSLog(@"%ld", (long)userId);
+    self.userId = userId;
     self = [super init];
     
     int profBtnOffset = 200;
@@ -49,7 +50,7 @@
 
 - (void) profileButtonWasClicked :(id) sender {
     
-    UIViewController *vc = [[ProfileViewController alloc] init];
+    UIViewController *vc = [[ProfileViewController alloc] initWithUserId:self.userId];
     [self.navigationController pushViewController:vc animated:YES];
     
 }

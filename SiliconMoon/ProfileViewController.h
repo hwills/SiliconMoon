@@ -10,4 +10,6 @@
 
 @interface ProfileViewController : UIViewController
 
+- (id) initWithUserId :(NSInteger) userId;
+
 @end

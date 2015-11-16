@@ -10,4 +10,6 @@
 
 @interface WelcomeViewController : UIViewController
 - (id) initWithUserId :(NSInteger) userId;
+@property (nonatomic) NSInteger userId;
+
 @end
