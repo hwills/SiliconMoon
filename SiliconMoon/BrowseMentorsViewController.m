@@ -19,7 +19,7 @@
                      @"Data 1 in array",@"Data 2 in array",@"Data 3 in array",
                      @"Data 4 in array",@"Data 5 in array",@"Data 5 in array",
                      @"Data 6 in array",@"Data 7 in array",@"Data 8 in array",
-                     @"Data 9 in array", nil];
+                     @"Data 91 in array", nil];
     [self setTitle:@"Mentors"];
     UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, 400, 400)
                                                       style:UITableViewStylePlain];

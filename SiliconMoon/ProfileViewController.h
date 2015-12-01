@@ -11,5 +11,9 @@
 @interface ProfileViewController : UIViewController
 
 - (id) initWithUserId :(NSInteger) userId;
+@property (nonatomic, retain) NSMutableData *webResopnse;
+@property (nonatomic, retain) UIImageView *imageView;
+@property (nonatomic, retain) UILabel *titleLabel;
+@property (nonatomic, retain) UILabel *descLabel;
 
 @end

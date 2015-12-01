@@ -7,6 +7,7 @@
 //
 
 #import "ProfileViewController.h"
+#import "ProjectTabBarController.h"
 
 @implementation ProfileViewController
 
@@ -15,34 +16,34 @@
     self = [super init];
     
     UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://i.ytimg.com/vi/o0LOJCvMWwM/hqdefault.jpg"]]];
-    UIImageView *view = [[UIImageView alloc] initWithImage:img];
-    view.frame = CGRectMake(20.0, 100.0, 100.0, 100.0);
-    view.backgroundColor = [[UIColor alloc] initWithPatternImage:img];
-    [self.view addSubview:view];
+    self.imageView = [[UIImageView alloc] initWithImage:img];
+    self.imageView.frame = CGRectMake(20.0, 100.0, 100.0, 100.0);
+    self.imageView.backgroundColor = [[UIColor alloc] initWithPatternImage:img];
+    [self.view addSubview:self.imageView];
     //TODO: make image work
     
-    UILabel *titleLabel = [[UILabel alloc] init];
-    [titleLabel setText:@"hwills"];
-    [titleLabel setTextAlignment:NSTextAlignmentLeft];
-    [titleLabel setFont:[UIFont fontWithName:@"Times" size:36.0]];
-    [titleLabel setTextColor:[UIColor blackColor]];
-    titleLabel.numberOfLines = 1;
-    titleLabel.frame = CGRectMake(view.frame.origin.x + view.frame.size.width + 10, 100.0, 200.0, 100.0);
-    [self.view addSubview:titleLabel];
+    self.titleLabel = [[UILabel alloc] init];
+    [self.titleLabel setText:@"hwills"];
+    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.titleLabel setFont:[UIFont fontWithName:@"Times" size:36.0]];
+    [self.titleLabel setTextColor:[UIColor blackColor]];
+    self.titleLabel.numberOfLines = 1;
+    self.titleLabel.frame = CGRectMake(self.imageView.frame.origin.x + self.imageView.frame.size.width + 10, 100.0, 200.0, 100.0);
+    [self.view addSubview:self.titleLabel];
     
-    UILabel *descLabel = [[UILabel alloc] init];
-    [descLabel setText:@"I am a pacman looking for his pellet."];
-    [descLabel setTextAlignment:NSTextAlignmentLeft];
-    [descLabel setFont:[UIFont fontWithName:@"Times" size:12.0]];
-    [descLabel setTextColor:[UIColor blackColor]];
-    descLabel.numberOfLines = 2;
-    descLabel.frame = CGRectMake(30.0, 200.0, 180.0, 100.0);
-    [self.view addSubview:descLabel];
+    self.descLabel = [[UILabel alloc] init];
+    [self.descLabel setText:@"I am a pacman looking for his pellet."];
+    [self.descLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.descLabel setFont:[UIFont fontWithName:@"Times" size:12.0]];
+    [self.descLabel setTextColor:[UIColor blackColor]];
+    self.descLabel.numberOfLines = 2;
+    self.descLabel.frame = CGRectMake(30.0, 200.0, 180.0, 100.0);
+    [self.view addSubview:self.descLabel];
     
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [editBtn addTarget:self action:@selector(editButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"Edit" forState:UIControlStateNormal];
-    editBtn.frame = CGRectMake(descLabel.frame.origin.x + descLabel.frame.size.width, descLabel.frame.origin.y, 120.0, 30.0);
+    editBtn.frame = CGRectMake(self.descLabel.frame.origin.x + self.descLabel.frame.size.width, self.descLabel.frame.origin.y, 120.0, 30.0);
     editBtn.backgroundColor = [UIColor blueColor];
     [self.view addSubview:editBtn];
     
@@ -59,9 +60,48 @@
     projectBtn.frame = CGRectMake(projects.frame.origin.x + projects.frame.size.width, projects.frame.origin.y + 100.0, 120.0, 30.0);
     projectBtn.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:projectBtn];
-
+    
+    NSString *post = [NSString stringWithFormat:@"id=%ld",(long)userId];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+    NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getProfile.php"]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+    [urlRequest setURL:jsonFileUrl];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    [NSURLConnection connectionWithRequest:urlRequest delegate:self];
     
     return self;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    self.webResopnse = [[NSMutableData alloc] init];
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [self.webResopnse appendData:data];
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
+    NSError *e = nil;
+    NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
+    NSLog(@"%@", JSON[@"success"]);
+    if ([JSON[@"success"] isEqual: @"false"]) {
+        UIAlertView * errorOccuredAlert = [[UIAlertView alloc] initWithTitle:@"An error occured!" message:@"An error occured while retreiving your profile information. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
+        [errorOccuredAlert show];
+        return;
+    }
+    UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:JSON[@"url"]]]];
+    self.imageView.image = img;
+    [self.titleLabel setText:JSON[@"user"]];
+    [self.descLabel setText:JSON[@"desc"]];
+    
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -93,7 +133,8 @@
 }
 
 - (void) projectButtonWasClicked :(id) sender {
-    
+    UITabBarController *vc = [[ProjectTabBarController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
