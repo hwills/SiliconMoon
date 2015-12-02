@@ -19,5 +19,8 @@
 @property (nonatomic, retain) UITextField *desc;
 @property (nonatomic, retain) UITextField *password;
 @property LIALinkedInHttpClient *client;
+@property UIColor *midnightBlue;
+@property UIColor *blazeOrange;
+@property UIColor *niceGrey;
 
 @end

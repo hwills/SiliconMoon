@@ -10,24 +10,39 @@
 #import "LoginViewController.h"
 
 @implementation RegistrationViewController
-@synthesize client;
+@synthesize client, midnightBlue, blazeOrange, niceGrey;
 
 -(id) init
 {
     self= [super init];
+    midnightBlue= [UIColor colorWithRed:0 green:51.0f/255.0f blue:102.0f/255.0f alpha:1];
+    blazeOrange= [UIColor colorWithRed:1 green:122.0f/255.0f blue:0 alpha:1];
+    niceGrey= [UIColor colorWithRed:211.0f/255.0f green:211.0f/255.0f blue:211.0f/255.0f alpha:1];
     
-    [self addTextField:@"Username" :CGRectMake(100, 300, 200, 30)];
-    [self addTextField:@"Image Url" :CGRectMake(100, 350, 200, 30)];
-    [self addTextField:@"Description" :CGRectMake(100, 400, 200, 30)];
-    [self addTextField:@"Password" :CGRectMake(100, 450, 200, 30)];
+    [self addTextField:@"Username" :CGRectMake(80, 200, 200, 30)];
+    [self addTextField:@"Image Url" :CGRectMake(80, 250, 200, 30)];
+    [self addTextField:@"Description" :CGRectMake(80, 300, 200, 30)];
+    [self addTextField:@"Password" :CGRectMake(80, 350, 200, 30)];
     
     // register button has tag 2
-    [self addButton:@"Register" :CGRectMake(100, 550, 200, 50) :2];
-    [self addButton:@"Register with Linkedin" :CGRectMake(100, 600, 200, 50) :3];
+    [self addButton:@"Register" :CGRectMake(80, 400, 200, 30) :2];
+    [self addButton:@"Register with Linkedin" :CGRectMake(80, 450, 200, 30) :3];
+    
+    UILabel *label = [[UILabel alloc] init];
+    
+    [label setText:@"Silicon Moon"];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setFont:[UIFont fontWithName:@"Times" size:40]];
+    [label setTextColor:[UIColor blackColor]];
+    label.numberOfLines = 2;
+    label.frame = CGRectMake(60, 100, 250, 100);
+    label.textColor= niceGrey;
+    [self.view addSubview:label];
     
     self.client= [self initialize_Client];
     
     return self;
+
 }
 
 -(void)addButton: (NSString*)buttonLabel : (CGRect)buttonFrame :(int)buttonTag{
@@ -43,6 +58,12 @@
     
     // This add a listener to the button handled in buttonClicked function
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    // set button background color
+    [button setBackgroundColor:blazeOrange];
+    
+    // set button text color
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self.view addSubview:button];
 }
@@ -125,7 +146,6 @@
 - (void)requestMeWithToken:(NSString *)accessToken {
     [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~:(summary,num-connections)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
         NSLog(@"current user %@", result);
-        NSLog(@"current number connections %ld", (long)[result[@"numConnections"] integerValue]);
         NSString *post = [NSString stringWithFormat:@"user=%@&url=%@&desc=%@&pass=%@&sum=%@&con=%ld",self.username.text, self.imageUrl.text, self.desc.text, self.password.text, result[@"summary"], (long)[result[@"numConnections"] integerValue]];
         NSLog(@"Post Request %@", post);
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
