@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AFHTTPRequestOperation.h"
+#import "LIALinkedInHttpClient.h"
+#import "LIALinkedInApplication.h"
 
 @interface RegistrationViewController : UIViewController
 
@@ -15,5 +18,6 @@
 @property (nonatomic, retain) UITextField *imageUrl;
 @property (nonatomic, retain) UITextField *desc;
 @property (nonatomic, retain) UITextField *password;
+@property LIALinkedInHttpClient *client;
 
 @end

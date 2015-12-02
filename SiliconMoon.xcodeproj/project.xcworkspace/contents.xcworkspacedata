@@ -2,30 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../SiliconMoon/ProjectMessageViewController.h">
-   </FileRef>
-   <FileRef
-      location = "group:../SiliconMoon/ProjectMessageViewController.m">
-   </FileRef>
-   <FileRef
-      location = "group:../ProjectDescriptionViewController.h">
-   </FileRef>
-   <FileRef
-      location = "group:../ProjectDescriptionViewController.m">
-   </FileRef>
-   <FileRef
-      location = "group:../SiliconMoon/ProjectMemberViewController.h">
-   </FileRef>
-   <FileRef
-      location = "group:../SiliconMoon/ProjectMemberViewController.m">
-   </FileRef>
-   <FileRef
-      location = "group:../SiliconMoon/ProjectTabBarController.h">
-   </FileRef>
-   <FileRef
-      location = "group:../SiliconMoon/ProjectTabBarController.m">
-   </FileRef>
-   <FileRef
       location = "self:SiliconMoon.xcodeproj">
    </FileRef>
 </Workspace>

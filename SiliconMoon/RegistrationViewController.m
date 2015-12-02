@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 
 @implementation RegistrationViewController
+@synthesize client;
 
 -(id) init
 {
@@ -22,6 +23,9 @@
     
     // register button has tag 2
     [self addButton:@"Register" :CGRectMake(100, 550, 200, 50) :2];
+    [self addButton:@"Register with Linkedin" :CGRectMake(100, 600, 200, 50) :3];
+    
+    self.client= [self initialize_Client];
     
     return self;
 }
@@ -77,10 +81,13 @@
 {
     switch (sender.tag) {
         case 1:
+        {
             NSLog(@"Clicked to get back to login");
             // get back to login view controller here
             break;
-        case 2:{
+        }
+        case 2:
+        {
             NSLog(@"Clicked on register");
             // need to create user here
             NSString *post = [NSString stringWithFormat:@"user=%@&url=%@&desc=%@&pass=%@",self.username.text, self.imageUrl.text, self.desc.text, self.password.text];
@@ -94,10 +101,45 @@
             [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
             [urlRequest setHTTPBody:postData];
             [NSURLConnection connectionWithRequest:urlRequest delegate:self];
-            break;}
+            break;
+        }
+        case 3:{
+            [self.client getAuthorizationCode:^(NSString *code) {
+                [self.client getAccessToken:code success:^(NSDictionary *accessTokenData) {
+                    NSString *accessToken = [accessTokenData objectForKey:@"access_token"];
+                    [self requestMeWithToken:accessToken];
+                }                   failure:^(NSError *error) {
+                    NSLog(@"Quering accessToken failed %@", error);
+                }];
+            }                      cancel:^{
+                NSLog(@"Authorization was cancelled by user");
+            }                     failure:^(NSError *error) {
+                NSLog(@"Authorization failed %@", error);
+            }];
+        }
         default:
             break;
     }
+}
+
+- (void)requestMeWithToken:(NSString *)accessToken {
+    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~:(picture-url)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+        NSLog(@"current user %@", result);
+        
+    }        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"failed to fetch current user %@", error);
+    }];
+}
+
+- (LIALinkedInHttpClient *)initialize_Client {
+    NSString *LINKEDIN_CLIENT_ID= @"772t0igruo1tig";
+    NSString *LINKEDIN_CLIENT_SECRET= @"lWNHomkHd19RaVFE";
+    LIALinkedInApplication *application = [LIALinkedInApplication applicationWithRedirectURL:@"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/"
+                                                                                    clientId:LINKEDIN_CLIENT_ID
+                                                                                clientSecret:LINKEDIN_CLIENT_SECRET
+                                                                                       state:@"DCEEFWF45453sdffef424"
+                                                                               grantedAccess:@[@"r_basicprofile"]];
+    return [LIALinkedInHttpClient clientForApplication:application presentingViewController:nil];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
