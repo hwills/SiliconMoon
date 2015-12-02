@@ -10,8 +10,11 @@
 
 @interface ProjectDescriptionViewController : UITabBarController
 
--(id) initWithProjectNameDescriptionAndRequest: (NSString *) name projectDesctiption: (NSString *) desc projectRequest: (NSInteger) req;
+-(id) initWithProjectNameDescriptionRequestIdAndUserId: (NSString *) name projectDesctiption: (NSString *) desc projectRequest: (NSInteger) req projectId: (NSInteger) pid userId: (NSInteger) uid;
 
+@property (nonatomic, retain) NSMutableData *webResopnse;
 @property NSString *projectName, *projectDescription;
 @property bool isRequested;
+@property NSInteger projectId;
+@property NSInteger userId;
 @end

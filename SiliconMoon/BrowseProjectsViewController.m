@@ -127,7 +127,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameDescriptionAndRequest:[projects objectAtIndex:indexPath.row] projectDesctiption:[descrics objectAtIndex:indexPath.row] projectRequest:0];
+    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameDescriptionRequestIdAndUserId:[projects objectAtIndex:indexPath.row] projectDesctiption:[descrics objectAtIndex:indexPath.row] projectRequest:0 projectId:-1 userId:-1];
     [self.navigationController pushViewController:descriptionVC animated:YES];
 }
 

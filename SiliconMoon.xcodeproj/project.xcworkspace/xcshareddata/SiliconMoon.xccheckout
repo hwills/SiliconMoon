@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>2D6A0C37-4ED9-44AE-BBC4-17975235D714</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>SiliconMoon</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>3F9ADDB70DCB1DBCA84CFA36D1122B02F36AB39E</key>
 		<string>https://github.com/hwills/SiliconMoon.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>SiliconMoon.xcodeproj/project.xcworkspace</string>
+	<string>SiliconMoon.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3F9ADDB70DCB1DBCA84CFA36D1122B02F36AB39E</key>

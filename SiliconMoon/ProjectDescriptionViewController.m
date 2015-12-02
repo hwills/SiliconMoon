@@ -12,7 +12,7 @@
 @synthesize isRequested;
 @synthesize projectName, projectDescription;
 
--(id) initWithProjectNameDescriptionAndRequest: (NSString *) name projectDesctiption: (NSString *) desc projectRequest: (NSInteger) req
+-(id) initWithProjectNameDescriptionRequestIdAndUserId: (NSString *) name projectDesctiption: (NSString *) desc projectRequest: (NSInteger) req projectId: (NSInteger) pid userId: (NSInteger) uid
 {
     self= [super init];
     self.title= @"Messages";
@@ -21,6 +21,8 @@
     self.isRequested= (req==1);
     self.projectName= name;
     self.projectDescription= desc;
+    self.projectId = pid;
+    self.userId = uid;
     
     [self addLabel:self.projectName :CGRectMake(140, 50, 200, 50)];
     [self addLabel:self.projectDescription :CGRectMake(30, 100, 200, 50)];
@@ -83,10 +85,21 @@
 - (void)buttonClicked: (UIButton*) sender
 {
     switch (sender.tag) {
-        case 1:
+        case 1:{
             NSLog(@"Clicked on Accept");
+            NSString *post = [NSString stringWithFormat:@"userid=%ld&projectid=%ld",(long)self.userId,(long)self.projectId];
+            NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+            NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/acceptUser.php"]];
+            NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+            [urlRequest setURL:jsonFileUrl];
+            [urlRequest setHTTPMethod:@"POST"];
+            [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+            [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            [urlRequest setHTTPBody:postData];
+            [NSURLConnection connectionWithRequest:urlRequest delegate:self];
             break;
-            
+        }
         case 2:
             NSLog(@"Clicked on Deny");
             break;
@@ -94,6 +107,36 @@
         default:
             break;
     }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    self.webResopnse = [[NSMutableData alloc] init];
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [self.webResopnse appendData:data];
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
+    NSLog(@"RESPONSE: %@", responseString);
+    NSError *e = nil;
+    NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
+    NSLog(@"%@", JSON[@"ignore"]);
+    if ([JSON[@"ignore"] isEqual: @"true"]) {
+        UIAlertView * mentorAlert = [[UIAlertView alloc] initWithTitle:@"Congratulations" message:@"You are now a member of this project!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YAY!", nil];
+        [mentorAlert show];
+        return;
+    }
+    if ([JSON[@"success"] isEqual: @"false"]) {
+        UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"We had an error. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
+        [errorAlert show];
+        return;
+    }
+    
 }
 
 @end

@@ -21,6 +21,8 @@
     self.projectids = [[NSMutableArray alloc] init];
     self.projectrequests = [[NSMutableArray alloc] init];
     self.userId = userId;
+    self.userIdFor = userId;
+    self.userIdFrom = userId;
     
     UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://i.ytimg.com/vi/o0LOJCvMWwM/hqdefault.jpg"]]];
     self.imageView = [[UIImageView alloc] initWithImage:img];
@@ -69,6 +71,65 @@
     return self;
 }
 
+- (id) initWithUserIdFromUserId :(NSInteger) userIdFor crntUsersId: (NSInteger) userIdFrom
+{
+    self = [super init];
+    
+    self.projects = [[NSMutableArray alloc] init];
+    self.projectdescs = [[NSMutableArray alloc] init];
+    self.projectids = [[NSMutableArray alloc] init];
+    self.projectrequests = [[NSMutableArray alloc] init];
+    self.userIdFor = userIdFor;
+    self.userIdFrom = userIdFrom;
+    
+    UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://i.ytimg.com/vi/o0LOJCvMWwM/hqdefault.jpg"]]];
+    self.imageView = [[UIImageView alloc] initWithImage:img];
+    self.imageView.frame = CGRectMake(20.0, 100.0, 100.0, 100.0);
+    self.imageView.backgroundColor = [[UIColor alloc] initWithPatternImage:img];
+    [self.view addSubview:self.imageView];
+    //TODO: make image work
+    
+    self.titleLabel = [[UILabel alloc] init];
+    [self.titleLabel setText:@"hwills"];
+    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.titleLabel setFont:[UIFont fontWithName:@"Times" size:36.0]];
+    [self.titleLabel setTextColor:[UIColor blackColor]];
+    self.titleLabel.numberOfLines = 1;
+    self.titleLabel.frame = CGRectMake(self.imageView.frame.origin.x + self.imageView.frame.size.width + 10, 100.0, 200.0, 100.0);
+    [self.view addSubview:self.titleLabel];
+    
+    self.descLabel = [[UILabel alloc] init];
+    [self.descLabel setText:@"I am a pacman looking for his pellet."];
+    [self.descLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.descLabel setFont:[UIFont fontWithName:@"Times" size:12.0]];
+    [self.descLabel setTextColor:[UIColor blackColor]];
+    self.descLabel.numberOfLines = 2;
+    self.descLabel.frame = CGRectMake(30.0, 200.0, 180.0, 100.0);
+    [self.view addSubview:self.descLabel];
+    
+    /*UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [editBtn addTarget:self action:@selector(editButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [editBtn setTitle:@"Edit" forState:UIControlStateNormal];
+    editBtn.frame = CGRectMake(self.descLabel.frame.origin.x + self.descLabel.frame.size.width, self.descLabel.frame.origin.y, 120.0, 30.0);
+    editBtn.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:editBtn];*/
+    
+    NSLog(@"ID FOR %ld",(long)self.userIdFor);
+    NSString *post = [NSString stringWithFormat:@"idFor=%ld&idFrom=%ld",(long)self.userIdFor, self.userIdFrom];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+    NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getProfileFromOther.php"]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+    [urlRequest setURL:jsonFileUrl];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    [NSURLConnection connectionWithRequest:urlRequest delegate:self];
+    
+    return self;
+}
+
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     self.webResopnse = [[NSMutableData alloc] init];
@@ -86,6 +147,11 @@
     NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
     NSLog(@"Success?: %@", JSON[@"success"]);
+    if ([JSON[@"ignore"] isEqual: @"true"]) {
+        UIAlertView * requestedAlert = [[UIAlertView alloc] initWithTitle:@"User requested!" message:@"This user has been requested to join you on your project." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Great!", nil];
+        [requestedAlert show];
+        return;
+    }
     if ([JSON[@"success"] isEqual: @"false"]) {
         NSLog(@"%@",JSON[@"message"]);
         UIAlertView * errorOccuredAlert = [[UIAlertView alloc] initWithTitle:@"An error occured!" message:@"An error occured while retreiving your profile information. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
@@ -115,12 +181,22 @@
     [self.projectz reloadAllComponents];
     [self.view addSubview:self.projectz];
     
-    UIButton *projectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [projectBtn addTarget:self action:@selector(projectButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [projectBtn setTitle:@"See this project" forState:UIControlStateNormal];
-    projectBtn.frame = CGRectMake(self.projectz.frame.origin.x + self.projectz.frame.size.width, self.projectz.frame.origin.y + 100.0, 120.0, 30.0);
-    projectBtn.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:projectBtn];
+    if(self.userIdFrom == self.userIdFor) {
+        UIButton *projectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [projectBtn addTarget:self action:@selector(projectButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [projectBtn setTitle:@"See this project" forState:UIControlStateNormal];
+        projectBtn.frame = CGRectMake(self.projectz.frame.origin.x + self.projectz.frame.size.width, self.projectz.frame.origin.y + 100.0, 120.0, 30.0);
+        projectBtn.backgroundColor = [UIColor orangeColor];
+        [self.view addSubview:projectBtn];
+    }
+    else {
+        UIButton *projectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [projectBtn addTarget:self action:@selector(requestButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [projectBtn setTitle:@"Request for project" forState:UIControlStateNormal];
+        projectBtn.frame = CGRectMake(self.projectz.frame.origin.x + self.projectz.frame.size.width, self.projectz.frame.origin.y + 100.0, 120.0, 30.0);
+        projectBtn.backgroundColor = [UIColor orangeColor];
+        [self.view addSubview:projectBtn];
+    }
     
 //    [descrics addObjectsFromArray:descs];
     
@@ -146,6 +222,21 @@
     NSInteger index = [self.projectz selectedRowInComponent:0];
     UITabBarController *vc = [[ProjectTabBarController alloc] initWithProjectIdNameDescriptionRequestsAndUserId:[[self.projectids objectAtIndex:index] integerValue] projectName:self.projects[index] projectDesctiption:self.projectdescs[index] projectRequest:[[self.projectrequests objectAtIndex:index] integerValue] userId:self.userId];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void) requestButtonWasClicked :(id) sender {
+    NSInteger index = [self.projectz selectedRowInComponent:0];
+    NSString *post = [NSString stringWithFormat:@"userid=%ld&projectid=%ld",(long)self.userIdFor,(long)[[self.projectids objectAtIndex:index] integerValue]];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+    NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/requestUser.php"]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+    [urlRequest setURL:jsonFileUrl];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    [NSURLConnection connectionWithRequest:urlRequest delegate:self];
 }
 
 @end

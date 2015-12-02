@@ -7,6 +7,7 @@
 //
 
 #import "BrowseMentorsViewController.h"
+#import "ProfileViewController.h"
 
 @implementation BrowseMentorsViewController
 
@@ -144,6 +145,11 @@
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrls objectAtIndex:indexPath.row]]]];
     cell.textLabel.text = [mentors objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProfileViewController *vc= [[ProfileViewController alloc]initWithUserIdFromUserId:[[self.userIds objectAtIndex:indexPath.row] integerValue] crntUsersId:self.userId];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

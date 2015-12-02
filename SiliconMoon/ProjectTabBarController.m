@@ -17,7 +17,7 @@
 {
     NSLog(@"%ld %@ %@ %ld", (long)projectId, projectName, projectDesctiption, (long)projectRequest);
     self= [super init];
-    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameDescriptionAndRequest:projectName projectDesctiption:projectDesctiption projectRequest:projectRequest];
+    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameDescriptionRequestIdAndUserId:projectName projectDesctiption:projectDesctiption projectRequest:projectRequest projectId:projectId userId:userId];
     ProjectMemberViewController *memberVC= [[ProjectMemberViewController alloc]initWithProjectId:projectId];
     ProjectMessageViewController *messageVC= [[ProjectMessageViewController alloc]init];
     self.viewControllers= [NSArray arrayWithObjects: descriptionVC, memberVC, messageVC, nil];

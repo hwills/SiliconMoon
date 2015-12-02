@@ -7,20 +7,71 @@
 //
 
 #import "BrowseDevelopersViewController.h"
+#import "ProfileViewController.h"
 
 @implementation BrowseDevelopersViewController
 
 @synthesize developers;
+@synthesize imageUrls;
+@synthesize userIds;
 
--(id) init
+- (id) initWithUserId :(NSInteger) userId
 {
     self= [super init];
-    developers = [[NSMutableArray alloc]initWithObjects:
-                   @"Data 1 in array",@"Data 2 in array",@"Data 3 in array",
-                   @"Data 4 in array",@"Data 5 in array",@"Data 5 in array",
-                   @"Data 6 in array",@"Data 7 in array",@"Data 8 in array",
-                   @"Data 9 in array", nil];
+    developers = [[NSMutableArray alloc]init];
+    imageUrls = [[NSMutableArray alloc]init];
+    userIds = [[NSMutableArray alloc]init];
+    self.userId = userId;
     [self setTitle:@"Developers"];
+    NSString *post = [NSString stringWithFormat:@""];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+    NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getDeveloper.php"]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+    [urlRequest setURL:jsonFileUrl];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    [NSURLConnection connectionWithRequest:urlRequest delegate:self];
+    
+    return self;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    self.webResopnse = [[NSMutableData alloc] init];
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [self.webResopnse appendData:data];
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
+    NSLog(@"RESPONSE: %@", responseString);
+    NSError *e = nil;
+    NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
+    NSLog(@"%@", JSON[@"ignore"]);
+    if ([JSON[@"ignore"] isEqual: @"true"]) {
+        UIAlertView * mentorAlert = [[UIAlertView alloc] initWithTitle:@"Congratulations" message:@"You are now a developer!" delegate:self cancelButtonTitle:nil otherButtonTitles:@"YAY!", nil];
+        [mentorAlert show];
+        return;
+    }
+    if ([JSON[@"success"] isEqual: @"false"]) {
+        UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"We had an error. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
+        [errorAlert show];
+        return;
+    }
+    NSArray *urls = [JSON[@"url"] componentsSeparatedByString:@", "];
+    NSArray *users = [JSON[@"user"] componentsSeparatedByString:@", "];
+    NSArray *ids = [JSON[@"id"] componentsSeparatedByString:@", "];
+    NSLog(@"DEVS: %@", users);
+    [imageUrls addObjectsFromArray:urls];
+    [developers addObjectsFromArray:users];
+    [userIds addObjectsFromArray:ids];
     UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, 400, 400)
                                                       style:UITableViewStylePlain];
     
@@ -31,18 +82,23 @@
     
     [self addButton:@"Become Developer" :CGRectMake(200, 50, 200, 50) :1];
     [self.view addSubview: table];
-    return self;
+    
+    
 }
 
 - (void)buttonClicked: (UIButton*) sender
 {
-    switch (sender.tag) {
-        case 1:
-            NSLog(@"Clicked on become developer");
-            break;
-        default:
-            break;
-    }
+    NSString *post = [NSString stringWithFormat:@"id=%ld",(long)self.userId];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+    NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/becomeDeveloper.php"]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+    [urlRequest setURL:jsonFileUrl];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    [NSURLConnection connectionWithRequest:urlRequest delegate:self];
 }
 
 -(void)addButton: (NSString*)buttonLabel : (CGRect)buttonFrame :(int)buttonTag{
@@ -73,7 +129,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 100;
+    return [developers count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -86,8 +142,14 @@
         
     }
     // Configure the cell...
+    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[imageUrls objectAtIndex:indexPath.row]]]];
     cell.textLabel.text = [developers objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProfileViewController *vc= [[ProfileViewController alloc]initWithUserIdFromUserId:[[self.userIds objectAtIndex:indexPath.row] integerValue] crntUsersId:self.userId];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
