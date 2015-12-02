@@ -49,12 +49,12 @@
     self.descLabel.frame = CGRectMake(30.0, 200.0, 180.0, 100.0);
     [self.view addSubview:self.descLabel];
     
-    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [editBtn addTarget:self action:@selector(editButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [editBtn setTitle:@"Edit" forState:UIControlStateNormal];
-    editBtn.frame = CGRectMake(self.descLabel.frame.origin.x + self.descLabel.frame.size.width, self.descLabel.frame.origin.y, 120.0, 30.0);
-    editBtn.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:editBtn];
+//    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [editBtn addTarget:self action:@selector(editButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [editBtn setTitle:@"Edit" forState:UIControlStateNormal];
+//    editBtn.frame = CGRectMake(self.descLabel.frame.origin.x + self.descLabel.frame.size.width, self.descLabel.frame.origin.y, 120.0, 30.0);
+//    editBtn.backgroundColor = [UIColor blueColor];
+//    [self.view addSubview:editBtn];
     
     NSString *post = [NSString stringWithFormat:@"id=%ld",(long)userId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
