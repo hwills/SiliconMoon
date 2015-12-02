@@ -10,7 +10,11 @@
 
 @interface BrowseProjectsViewController : UIViewController<UITableViewDataSource,
 UITableViewDelegate>
+- (id) initWithUserId :(NSInteger) userId;
 
+@property (nonatomic, retain) NSMutableData *webResopnse;
 @property (nonatomic, strong) NSMutableArray *projects;
+@property (nonatomic, strong) NSMutableArray *descrics;
+@property (nonatomic) NSInteger userId;
 
 @end

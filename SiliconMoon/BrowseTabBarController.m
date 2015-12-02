@@ -13,10 +13,10 @@
 
 @implementation BrowseTabBarController
 
--(id) init
+-(id) initWithUserId : (NSInteger)userId
 {
     self= [super init];
-    BrowseProjectsViewController *projectsVC= [[BrowseProjectsViewController alloc]init];
+    BrowseProjectsViewController *projectsVC= [[BrowseProjectsViewController alloc]initWithUserId:userId];
     BrowseDevelopersViewController *developersVC= [[BrowseDevelopersViewController alloc]init];
     BrowseMentorsViewController *mentorsVC= [[BrowseMentorsViewController alloc]init];
     self.viewControllers= [NSArray arrayWithObjects: projectsVC, developersVC, mentorsVC, nil];

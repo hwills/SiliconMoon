@@ -58,7 +58,7 @@
 
 - (void) browseButtonWasClicked :(id) sender {
     
-    UITabBarController *tbc = [[BrowseTabBarController alloc] init];
+    UITabBarController *tbc = [[BrowseTabBarController alloc] initWithUserId:self.userId];
     [self.navigationController pushViewController:tbc animated:YES];
     
 }

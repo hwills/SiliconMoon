@@ -7,21 +7,61 @@
 //
 
 #import "BrowseProjectsViewController.h"
+#import "NewProjectViewController.h"
 
 @implementation BrowseProjectsViewController
 @synthesize projects;
+@synthesize descrics;
 
--(id) init
+-(id) initWithUserId:(NSInteger) userId
 {
     self= [super init];
-    projects= [[NSMutableArray alloc]initWithObjects:
-              @"Data 1 in array",@"Data 2 in array",@"Data 3 in array",
-              @"Data 4 in array",@"Data 5 in array",@"Data 5 in array",
-              @"Data 6 in array",@"Data 7 in array",@"Data 8 in array",
-              @"Data 9 in array", nil];
+    projects= [[NSMutableArray alloc]init];
     [self setTitle:@"Projects"];
+    self.userId = userId;
+    NSString *post = [NSString stringWithFormat:@""];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+    NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/getProjects.php"]];
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+    [urlRequest setURL:jsonFileUrl];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    [NSURLConnection connectionWithRequest:urlRequest delegate:self];
+    
+    return self;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    self.webResopnse = [[NSMutableData alloc] init];
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [self.webResopnse appendData:data];
+}
+
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
+    NSError *e = nil;
+    NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
+    NSLog(@"%@", JSON[@"success"]);
+    if ([JSON[@"success"] isEqual: @"false"]) {
+        UIAlertView * errorAlert = [[UIAlertView alloc] initWithTitle:@"Error finding projects" message:@"We had an error finding projects. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
+        [errorAlert show];
+        return;
+    }
+    NSArray *names = [JSON[@"name"] componentsSeparatedByString:@", "];
+    NSArray *descs = [JSON[@"desc"] componentsSeparatedByString:@", "];
+    NSLog(@"%@", names);
+    [projects addObjectsFromArray:names];
+    [descrics addObjectsFromArray:descs];
     UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, 400, 400)
-                                                           style:UITableViewStylePlain];
+                                                      style:UITableViewStylePlain];
     
     table.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     table.delegate = self;
@@ -30,22 +70,13 @@
     
     [self addButton:@"New project" :CGRectMake(200, 50, 200, 50) :1];
     [self.view addSubview: table];
-    return self;
+    
 }
 
 - (void)buttonClicked: (UIButton*) sender
 {
-    switch (sender.tag) {
-        case 1:
-            NSLog(@"Clicked on login");
-            break;
-        case 2:
-            NSLog(@"Clicked on register");
-            // get to register view controller here
-            break;
-        default:
-            break;
-    }
+    UIViewController *vc = [[NewProjectViewController alloc] initWithUserId:self.userId];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)addButton: (NSString*)buttonLabel : (CGRect)buttonFrame :(int)buttonTag{
@@ -76,7 +107,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 100;
+    return [projects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

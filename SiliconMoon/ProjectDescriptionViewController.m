@@ -12,15 +12,15 @@
 @synthesize isRequested;
 @synthesize projectName, projectDescription;
 
--(id) init
+-(id) initWithProjectNameAndDescription: (NSString *) name projectDesctiption: (NSString *) desc;
 {
     self= [super init];
     self.title= @"Messages";
     
     // populate information from database
     self.isRequested= true;
-    self.projectName= @"Silicon Moon";
-    self.projectDescription= @"Bring ideas to builders";
+    self.projectName= name;
+    self.projectDescription= desc;
     
     [self addLabel:self.projectName :CGRectMake(140, 50, 200, 50)];
     [self addLabel:self.projectDescription :CGRectMake(30, 100, 200, 50)];

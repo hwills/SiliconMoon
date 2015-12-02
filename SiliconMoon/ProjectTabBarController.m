@@ -13,10 +13,11 @@
 
 @implementation ProjectTabBarController
 
--(id) init
+-(id) initWithProjectIdNameAndDescription: (NSInteger) projectId projectName: (NSString *) projectName projectDesctiption: (NSString *) projectDesctiption
 {
+    NSLog(@"%ld %@ %@", (long)projectId, projectName, projectDesctiption);
     self= [super init];
-    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]init];
+    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameAndDescription:projectName projectDesctiption:projectDesctiption];
     ProjectMemberViewController *memberVC= [[ProjectMemberViewController alloc]init];
     ProjectMessageViewController *messageVC= [[ProjectMessageViewController alloc]init];
     self.viewControllers= [NSArray arrayWithObjects: descriptionVC, memberVC, messageVC, nil];

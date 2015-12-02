@@ -10,4 +10,6 @@
 
 @interface BrowseTabBarController : UITabBarController
 
+- (id) initWithUserId :(NSInteger) userId;
+
 @end

@@ -27,6 +27,7 @@
 		BDAEA1811BF93AB100A5F480 /* BrowseProjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1801BF93AB100A5F480 /* BrowseProjectsViewController.m */; };
 		BDAEA1841BF93AC200A5F480 /* BrowseDevelopersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1831BF93AC200A5F480 /* BrowseDevelopersViewController.m */; };
 		BDAEA1871BF93AD000A5F480 /* BrowseMentorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDAEA1861BF93AD000A5F480 /* BrowseMentorsViewController.m */; };
+		BDD1F6831C0E3A6D0035D2D5 /* NewProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD1F6821C0E3A6D0035D2D5 /* NewProjectViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		BDAEA1831BF93AC200A5F480 /* BrowseDevelopersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseDevelopersViewController.m; sourceTree = "<group>"; };
 		BDAEA1851BF93AD000A5F480 /* BrowseMentorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowseMentorsViewController.h; sourceTree = "<group>"; };
 		BDAEA1861BF93AD000A5F480 /* BrowseMentorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowseMentorsViewController.m; sourceTree = "<group>"; };
+		BDD1F6811C0E3A6D0035D2D5 /* NewProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewProjectViewController.h; sourceTree = "<group>"; };
+		BDD1F6821C0E3A6D0035D2D5 /* NewProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewProjectViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +137,8 @@
 				BDAEA1711BF9225200A5F480 /* WelcomeViewController.m */,
 				BDAEA1731BF9229C00A5F480 /* ProfileViewController.h */,
 				BDAEA1741BF9229C00A5F480 /* ProfileViewController.m */,
+				BDD1F6811C0E3A6D0035D2D5 /* NewProjectViewController.h */,
+				BDD1F6821C0E3A6D0035D2D5 /* NewProjectViewController.m */,
 				BDAEA1761BF922C100A5F480 /* RegistrationViewController.h */,
 				BDAEA1771BF922C100A5F480 /* RegistrationViewController.m */,
 				BDAEA16D1BF921E200A5F480 /* LoginViewController.h */,
@@ -288,6 +293,7 @@
 				AF4D3FC31BF9813E000514F1 /* ProjectDescriptionViewController.m in Sources */,
 				BDAEA1871BF93AD000A5F480 /* BrowseMentorsViewController.m in Sources */,
 				BDAEA17E1BF9395900A5F480 /* CreateProjectViewController.m in Sources */,
+				BDD1F6831C0E3A6D0035D2D5 /* NewProjectViewController.m in Sources */,
 				AF4D3FC61BF9818A000514F1 /* ProjectMessageViewController.m in Sources */,
 				BDAEA16F1BF921E200A5F480 /* LoginViewController.m in Sources */,
 				BDAEA1501BF91E9A00A5F480 /* ViewController.m in Sources */,

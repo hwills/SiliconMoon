@@ -10,10 +10,14 @@
 #import "ProjectTabBarController.h"
 
 @implementation ProfileViewController
+@synthesize projects;
 
 - (id) initWithUserId :(NSInteger) userId
 {
     self = [super init];
+    self.projects = [[NSMutableArray alloc] init];
+    self.projectdescs = [[NSMutableArray alloc] init];
+    self.projectids = [[NSMutableArray alloc] init];
     
     UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://i.ytimg.com/vi/o0LOJCvMWwM/hqdefault.jpg"]]];
     self.imageView = [[UIImageView alloc] initWithImage:img];
@@ -47,20 +51,6 @@
     editBtn.backgroundColor = [UIColor blueColor];
     [self.view addSubview:editBtn];
     
-    UIPickerView *projects = [[UIPickerView alloc] init];
-    projects.delegate = self;
-    projects.dataSource = self;
-    projects.showsSelectionIndicator = YES;
-    projects.frame = CGRectMake(20.0, 250.0, 180.0, 162.0);
-    [self.view addSubview:projects];
-    
-    UIButton *projectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [projectBtn addTarget:self action:@selector(projectButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [projectBtn setTitle:@"See this project" forState:UIControlStateNormal];
-    projectBtn.frame = CGRectMake(projects.frame.origin.x + projects.frame.size.width, projects.frame.origin.y + 100.0, 120.0, 30.0);
-    projectBtn.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:projectBtn];
-    
     NSString *post = [NSString stringWithFormat:@"id=%ld",(long)userId];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
@@ -93,6 +83,7 @@
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
     NSLog(@"%@", JSON[@"success"]);
     if ([JSON[@"success"] isEqual: @"false"]) {
+        NSLog(@"%@",JSON[@"message"]);
         UIAlertView * errorOccuredAlert = [[UIAlertView alloc] initWithTitle:@"An error occured!" message:@"An error occured while retreiving your profile information. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
         [errorOccuredAlert show];
         return;
@@ -101,6 +92,31 @@
     self.imageView.image = img;
     [self.titleLabel setText:JSON[@"user"]];
     [self.descLabel setText:JSON[@"desc"]];
+    NSArray *names = [JSON[@"projectnames"] componentsSeparatedByString:@", "];
+    NSArray *pids = [JSON[@"projectids"] componentsSeparatedByString:@", "];
+    NSArray *descs = [JSON[@"projectdescs"] componentsSeparatedByString:@", "];
+//    NSLog(@"%@", names);
+    [self.projects addObjectsFromArray:names];
+    [self.projectdescs addObjectsFromArray:descs];
+    [self.projectids addObjectsFromArray:pids];
+    NSLog(@"%@",self.projects);
+    
+    self.projectz = [[UIPickerView alloc] init];
+    self.projectz.delegate = self;
+    self.projectz.dataSource = self;
+    self.projectz.showsSelectionIndicator = YES;
+    self.projectz.frame = CGRectMake(20.0, 250.0, 180.0, 162.0);
+    [self.projectz reloadAllComponents];
+    [self.view addSubview:self.projectz];
+    
+    UIButton *projectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [projectBtn addTarget:self action:@selector(projectButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [projectBtn setTitle:@"See this project" forState:UIControlStateNormal];
+    projectBtn.frame = CGRectMake(self.projectz.frame.origin.x + self.projectz.frame.size.width, self.projectz.frame.origin.y + 100.0, 120.0, 30.0);
+    projectBtn.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:projectBtn];
+    
+//    [descrics addObjectsFromArray:descs];
     
 }
 
@@ -109,23 +125,11 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return 3;
+    return [projects count];
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    NSString * title = nil;
-    switch(row) {
-        case 0:
-            title = @"Project 1";
-            break;
-        case 1:
-            title = @"Project 2";
-            break;
-        case 2:
-            title = @"Project 3";
-            break;
-    }
-    return title;
+    return [projects objectAtIndex:row];
 }
 
 - (void) editButtonWasClicked :(id) sender {
@@ -133,7 +137,8 @@
 }
 
 - (void) projectButtonWasClicked :(id) sender {
-    UITabBarController *vc = [[ProjectTabBarController alloc] init];
+    NSInteger index = [self.projectz selectedRowInComponent:0];
+    UITabBarController *vc = [[ProjectTabBarController alloc] initWithProjectIdNameAndDescription:[[self.projectids objectAtIndex:index] integerValue] projectName:self.projects[index] projectDesctiption:self.projectdescs[index]];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

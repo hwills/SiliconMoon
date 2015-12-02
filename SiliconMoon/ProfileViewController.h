@@ -15,5 +15,9 @@
 @property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UILabel *titleLabel;
 @property (nonatomic, retain) UILabel *descLabel;
+@property (nonatomic, strong) NSMutableArray *projects;
+@property (nonatomic, strong) NSMutableArray *projectdescs;
+@property (nonatomic, strong) NSMutableArray *projectids;
+@property (nonatomic, strong) UIPickerView * projectz;
 
 @end
