@@ -107,6 +107,24 @@
     self.descLabel.frame = CGRectMake(30.0, 200.0, 180.0, 100.0);
     [self.view addSubview:self.descLabel];
     
+    self.conLabel = [[UILabel alloc] init];
+    [self.conLabel setText:@"Not connected With LinkedIN"];
+    [self.conLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.conLabel setFont:[UIFont fontWithName:@"Times" size:12.0]];
+    [self.conLabel setTextColor:[UIColor blackColor]];
+    self.conLabel.numberOfLines = 2;
+    self.conLabel.frame = CGRectMake(30.0, 230.0, 180.0, 100.0);
+    [self.view addSubview:self.conLabel];
+    
+    self.sumLabel = [[UILabel alloc] init];
+    [self.sumLabel setText:@"This user is not registered with LinkedIN"];
+    [self.sumLabel setTextAlignment:NSTextAlignmentLeft];
+    [self.sumLabel setFont:[UIFont fontWithName:@"Times" size:12.0]];
+    [self.sumLabel setTextColor:[UIColor blackColor]];
+    self.sumLabel.numberOfLines = 2;
+    self.sumLabel.frame = CGRectMake(30.0, 250.0, 180.0, 100.0);
+    [self.view addSubview:self.sumLabel];
+    
     /*UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [editBtn addTarget:self action:@selector(editButtonWasClicked:) forControlEvents:UIControlEventTouchUpInside];
     [editBtn setTitle:@"Edit" forState:UIControlStateNormal];
@@ -162,6 +180,12 @@
     self.imageView.image = img;
     [self.titleLabel setText:JSON[@"user"]];
     [self.descLabel setText:JSON[@"desc"]];
+    if (![JSON[@"sum"] isEqual:@"none"]) {
+        [self.sumLabel setText:JSON[@"sum"]];
+    }
+    if (![JSON[@"con"] isEqual:@"none"]) {
+        [self.conLabel setText:JSON[@"con"]];
+    }
     NSArray *names = [JSON[@"projectnames"] componentsSeparatedByString:@", "];
     NSArray *pids = [JSON[@"projectids"] componentsSeparatedByString:@", "];
     NSArray *descs = [JSON[@"projectdescs"] componentsSeparatedByString:@", "];

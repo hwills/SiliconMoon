@@ -123,8 +123,21 @@
 }
 
 - (void)requestMeWithToken:(NSString *)accessToken {
-    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~:(picture-url)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
+    [self.client GET:[NSString stringWithFormat:@"https://api.linkedin.com/v1/people/~:(summary,num-connections)?oauth2_access_token=%@&format=json", accessToken] parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *result) {
         NSLog(@"current user %@", result);
+        NSLog(@"current number connections %ld", (long)[result[@"numConnections"] integerValue]);
+        NSString *post = [NSString stringWithFormat:@"user=%@&url=%@&desc=%@&pass=%@&sum=%@&con=%ld",self.username.text, self.imageUrl.text, self.desc.text, self.password.text, result[@"summary"], (long)[result[@"numConnections"] integerValue]];
+        NSLog(@"Post Request %@", post);
+        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[postData length]];
+        NSURL *jsonFileUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@", @"http://ec2-54-148-70-188.us-west-2.compute.amazonaws.com/~hwills/registerUser.php"]];
+        NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] init];
+        [urlRequest setURL:jsonFileUrl];
+        [urlRequest setHTTPMethod:@"POST"];
+        [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        [urlRequest setHTTPBody:postData];
+        [NSURLConnection connectionWithRequest:urlRequest delegate:self];
         
     }        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failed to fetch current user %@", error);
