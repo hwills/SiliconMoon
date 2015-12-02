@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSMutableArray *projects;
 @property (nonatomic, strong) NSMutableArray *projectdescs;
 @property (nonatomic, strong) NSMutableArray *projectids;
+@property (nonatomic, strong) NSMutableArray *projectrequests;
 @property (nonatomic, strong) UIPickerView * projectz;
+@property (nonatomic) NSInteger userId;
 
 @end

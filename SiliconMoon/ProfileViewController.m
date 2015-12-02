@@ -15,9 +15,12 @@
 - (id) initWithUserId :(NSInteger) userId
 {
     self = [super init];
+    
     self.projects = [[NSMutableArray alloc] init];
     self.projectdescs = [[NSMutableArray alloc] init];
     self.projectids = [[NSMutableArray alloc] init];
+    self.projectrequests = [[NSMutableArray alloc] init];
+    self.userId = userId;
     
     UIImage * img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://i.ytimg.com/vi/o0LOJCvMWwM/hqdefault.jpg"]]];
     self.imageView = [[UIImageView alloc] initWithImage:img];
@@ -78,10 +81,11 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSString *responseString = [[NSString alloc] initWithData:self.webResopnse encoding:NSUTF8StringEncoding];
+    NSLog(@"Response: %@", responseString);
     NSError *e = nil;
     NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *JSON = [NSJSONSerialization JSONObjectWithData:jsonData options: NSJSONReadingMutableContainers error: &e];
-    NSLog(@"%@", JSON[@"success"]);
+    NSLog(@"Success?: %@", JSON[@"success"]);
     if ([JSON[@"success"] isEqual: @"false"]) {
         NSLog(@"%@",JSON[@"message"]);
         UIAlertView * errorOccuredAlert = [[UIAlertView alloc] initWithTitle:@"An error occured!" message:@"An error occured while retreiving your profile information. Please try again later." delegate:self cancelButtonTitle:nil otherButtonTitles:@"Understood", nil];
@@ -95,11 +99,13 @@
     NSArray *names = [JSON[@"projectnames"] componentsSeparatedByString:@", "];
     NSArray *pids = [JSON[@"projectids"] componentsSeparatedByString:@", "];
     NSArray *descs = [JSON[@"projectdescs"] componentsSeparatedByString:@", "];
+    NSArray *reqs = [JSON[@"projectreqs"] componentsSeparatedByString:@", "];
 //    NSLog(@"%@", names);
     [self.projects addObjectsFromArray:names];
     [self.projectdescs addObjectsFromArray:descs];
     [self.projectids addObjectsFromArray:pids];
-    NSLog(@"%@",self.projects);
+    [self.projectrequests addObjectsFromArray:reqs];
+    NSLog(@"PROJECTS %@",self.projects);
     
     self.projectz = [[UIPickerView alloc] init];
     self.projectz.delegate = self;
@@ -138,7 +144,7 @@
 
 - (void) projectButtonWasClicked :(id) sender {
     NSInteger index = [self.projectz selectedRowInComponent:0];
-    UITabBarController *vc = [[ProjectTabBarController alloc] initWithProjectIdNameAndDescription:[[self.projectids objectAtIndex:index] integerValue] projectName:self.projects[index] projectDesctiption:self.projectdescs[index]];
+    UITabBarController *vc = [[ProjectTabBarController alloc] initWithProjectIdNameDescriptionRequestsAndUserId:[[self.projectids objectAtIndex:index] integerValue] projectName:self.projects[index] projectDesctiption:self.projectdescs[index] projectRequest:[[self.projectrequests objectAtIndex:index] integerValue] userId:self.userId];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

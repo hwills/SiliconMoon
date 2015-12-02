@@ -12,13 +12,13 @@
 @synthesize isRequested;
 @synthesize projectName, projectDescription;
 
--(id) initWithProjectNameAndDescription: (NSString *) name projectDesctiption: (NSString *) desc;
+-(id) initWithProjectNameDescriptionAndRequest: (NSString *) name projectDesctiption: (NSString *) desc projectRequest: (NSInteger) req
 {
     self= [super init];
     self.title= @"Messages";
     
     // populate information from database
-    self.isRequested= true;
+    self.isRequested= (req==1);
     self.projectName= name;
     self.projectDescription= desc;
     

@@ -13,12 +13,12 @@
 
 @implementation ProjectTabBarController
 
--(id) initWithProjectIdNameAndDescription: (NSInteger) projectId projectName: (NSString *) projectName projectDesctiption: (NSString *) projectDesctiption
+-(id) initWithProjectIdNameDescriptionRequestsAndUserId: (NSInteger) projectId projectName: (NSString *) projectName projectDesctiption: (NSString *) projectDesctiption projectRequest: (NSInteger) projectRequest userId: (NSInteger) userId
 {
-    NSLog(@"%ld %@ %@", (long)projectId, projectName, projectDesctiption);
+    NSLog(@"%ld %@ %@ %ld", (long)projectId, projectName, projectDesctiption, (long)projectRequest);
     self= [super init];
-    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameAndDescription:projectName projectDesctiption:projectDesctiption];
-    ProjectMemberViewController *memberVC= [[ProjectMemberViewController alloc]init];
+    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameDescriptionAndRequest:projectName projectDesctiption:projectDesctiption projectRequest:projectRequest];
+    ProjectMemberViewController *memberVC= [[ProjectMemberViewController alloc]initWithProjectId:projectId];
     ProjectMessageViewController *messageVC= [[ProjectMessageViewController alloc]init];
     self.viewControllers= [NSArray arrayWithObjects: descriptionVC, memberVC, messageVC, nil];
     return self;

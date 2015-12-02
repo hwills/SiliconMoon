@@ -18,7 +18,7 @@
     self= [super init];
     BrowseProjectsViewController *projectsVC= [[BrowseProjectsViewController alloc]initWithUserId:userId];
     BrowseDevelopersViewController *developersVC= [[BrowseDevelopersViewController alloc]init];
-    BrowseMentorsViewController *mentorsVC= [[BrowseMentorsViewController alloc]init];
+    BrowseMentorsViewController *mentorsVC= [[BrowseMentorsViewController alloc]initWithUserId:userId];
     self.viewControllers= [NSArray arrayWithObjects: projectsVC, developersVC, mentorsVC, nil];
     return self;
 }

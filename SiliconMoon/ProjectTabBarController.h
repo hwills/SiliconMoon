@@ -10,6 +10,6 @@
 
 @interface ProjectTabBarController : UITabBarController
 
--(id) initWithProjectIdNameAndDescription: (NSInteger) projectId projectName: (NSString *) projectName projectDesctiption: (NSString *) projectDesctiption;
+-(id) initWithProjectIdNameDescriptionRequestsAndUserId: (NSInteger) projectId projectName: (NSString *) projectName projectDesctiption: (NSString *) projectDesctiption projectRequest: (NSInteger) projectRequest userId: (NSInteger) userId;
 
 @end

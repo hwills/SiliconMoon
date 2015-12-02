@@ -8,6 +8,7 @@
 
 #import "BrowseProjectsViewController.h"
 #import "NewProjectViewController.h"
+#import "ProjectDescriptionViewController.h"
 
 @implementation BrowseProjectsViewController
 @synthesize projects;
@@ -17,6 +18,7 @@
 {
     self= [super init];
     projects= [[NSMutableArray alloc]init];
+    descrics= [[NSMutableArray alloc]init];
     [self setTitle:@"Projects"];
     self.userId = userId;
     NSString *post = [NSString stringWithFormat:@""];
@@ -57,7 +59,7 @@
     }
     NSArray *names = [JSON[@"name"] componentsSeparatedByString:@", "];
     NSArray *descs = [JSON[@"desc"] componentsSeparatedByString:@", "];
-    NSLog(@"%@", names);
+    NSLog(@"%@", descs);
     [projects addObjectsFromArray:names];
     [descrics addObjectsFromArray:descs];
     UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, 400, 400)
@@ -122,6 +124,11 @@
     // Configure the cell...
     cell.textLabel.text = [projects objectAtIndex:indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProjectDescriptionViewController *descriptionVC= [[ProjectDescriptionViewController alloc]initWithProjectNameDescriptionAndRequest:[projects objectAtIndex:indexPath.row] projectDesctiption:[descrics objectAtIndex:indexPath.row] projectRequest:0];
+    [self.navigationController pushViewController:descriptionVC animated:YES];
 }
 
 

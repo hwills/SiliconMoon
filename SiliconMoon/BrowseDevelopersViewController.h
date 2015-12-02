@@ -11,6 +11,7 @@
 @interface BrowseDevelopersViewController : UIViewController<UITableViewDataSource,
 UITableViewDelegate>
 
+@property (nonatomic, retain) NSMutableData *webResopnse;
 @property (nonatomic, strong) NSMutableArray * developers;
 
 @end

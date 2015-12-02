@@ -11,5 +11,9 @@
 @interface ProjectMemberViewController : UIViewController<UITableViewDataSource,
 UITableViewDelegate>
 
+-(id) initWithProjectId: (NSInteger) projectId;
+@property (nonatomic, retain) NSMutableData *webResopnse;
 @property (nonatomic, strong) NSMutableArray *members;
+@property (nonatomic, strong) NSMutableArray *imageUrls;
+
 @end

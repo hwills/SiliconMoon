@@ -10,7 +10,7 @@
 
 @interface ProjectDescriptionViewController : UITabBarController
 
--(id) initWithProjectNameAndDescription: (NSString *) name projectDesctiption: (NSString *) desc;
+-(id) initWithProjectNameDescriptionAndRequest: (NSString *) name projectDesctiption: (NSString *) desc projectRequest: (NSInteger) req;
 
 @property NSString *projectName, *projectDescription;
 @property bool isRequested;
